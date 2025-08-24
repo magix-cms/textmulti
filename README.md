@@ -5,12 +5,12 @@ Plugin Textmulti (texte multiple) for Magix CMS 3
 
 ### version 
 
-[![release](https://img.shields.io/github/release/magix-cms/advmulti.svg)](https://github.com/magix-cms/advmulti/releases/latest)
+[![release](https://img.shields.io/github/release/magix-cms/textmulti.svg)](https://github.com/magix-cms/textmulti/releases/latest)
 
 ## Installation
  * Décompresser l'archive dans le dossier "plugins" de magix cms
  * Connectez-vous dans l'administration de votre site internet 
- * Cliquer sur l'onglet plugins du menu déroulant pour sélectionner Banner.
+ * Cliquer sur l'onglet plugins du menu déroulant pour sélectionner textmulti.
  * Une fois dans le plugin, laisser faire l'auto installation
  * Il ne reste que la configuration du plugin pour correspondre avec vos données.
 
@@ -18,7 +18,7 @@ Plugin Textmulti (texte multiple) for Magix CMS 3
  * Supprimer l'ancien plugin
  * Envoyer les nouveaux fichiers
  * Connectez-vous dans l'administration de votre site internet 
- * Cliquer sur l'onglet plugins du menu déroulant pour sélectionner Banner.
+ * Cliquer sur l'onglet plugins du menu déroulant pour sélectionner textmulti.
  * Une fois dans le plugin, laisser faire l'auto update
 
 ### MISE A JOUR
