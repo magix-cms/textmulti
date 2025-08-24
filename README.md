@@ -1,7 +1,7 @@
 Textmulti
 =========
 
-Plugin Textmulti (advantage multiple) for Magix CMS 3
+Plugin Textmulti (texte multiple) for Magix CMS 3
 
 ### version 
 
