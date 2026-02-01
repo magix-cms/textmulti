@@ -6,6 +6,8 @@ Plugin Textmulti (texte multiple) for Magix CMS 3
 ### version 
 
 [![release](https://img.shields.io/github/release/magix-cms/textmulti.svg)](https://github.com/magix-cms/textmulti/releases/latest)
+![License](https://img.shields.io/github/license/magix-cms/geminiai.svg)
+![PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-blue.svg)
 
 ## Installation
  * Décompresser l'archive dans le dossier "plugins" de magix cms
