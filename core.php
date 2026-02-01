@@ -47,35 +47,58 @@ class plugins_textmulti_core extends plugins_textmulti_admin
         switch ($this->mod_action) {
             case 'add':
             case 'edit':
-                if( isset($this->content) && !empty($this->content) ) {
-                    $notify = 'update';
+            if( isset($this->content) && !empty($this->content) ) {
+                $notify = 'update';
+                $revisions = new backend_controller_revisions();
 
-                    if (!isset($this->content['id'])) {
-                        $this->add([
-                            'type' => 'textmulti',
-                            'data' => [
-                                'module' => $this->controller,
-                                'id_module' => $this->edit ?: NULL
-                            ]
-                        ]);
+                $currentId = isset($this->content['id']) ? $this->content['id'] : null;
+                unset($this->content['id']);
 
-                        $lasttextmulti = $this->getItems('lasttextmulti', null,'one',false);
-                        $this->content['id'] = $lasttextmulti['id_textmulti'];
-                        $notify = 'add_redirect';
-                    }
-                    foreach ($this->content as $lang => $textmulti) {
-                        $textmulti['id_lang'] = (int) isset($lang) ? $lang : 1;
-                        $textmulti['published_textmulti'] = (!isset($textmulti['published_textmulti']) ? 0 : 1);
-                        $textmultiLang = $this->getItems('textmultiContent',['id' => $this->content['id'],'id_lang' => $lang],'one',false);
-                        if($textmultiLang) $textmulti['id'] = $textmultiLang['id_textmulti_content'];
-                        else $textmulti['id_textmulti'] = $this->content['id'];
-                        $config = ['type' => 'textmultiContent', 'data' => $textmulti];
-                        $textmultiLang ? $this->upd($config) : $this->add($config);
-                        $this->message->json_post_response(true,$notify);
-                    }
-                    //$this->message->json_post_response(true,$notify);
+                if (!$currentId) {
+                    $this->add([
+                        'type' => 'textmulti',
+                        'data' => [
+                            'module' => $this->controller,
+                            'id_module' => $this->edit ?: NULL
+                        ]
+                    ]);
+
+                    $lasttextmulti = $this->getItems('lasttextmulti', null,'one',false);
+                    $currentId = $lasttextmulti['id_textmulti'];
+                    $notify = 'add_redirect';
                 }
-                else {
+
+                foreach ($this->content as $lang => $textmulti) {
+                    if (!is_array($textmulti)) continue;
+
+                    $textmulti['id_lang'] = (int)$lang;
+                    $textmulti['published_textmulti'] = (!isset($textmulti['published_textmulti']) ? 0 : 1);
+
+                    if (!isset($textmulti['desc_textmulti'])) {
+                        $textmulti['desc_textmulti'] = '';
+                    }
+
+                    $textmultiLang = $this->getItems('textmultiContent', [
+                        'id' => $currentId,
+                        'id_lang' => $lang
+                    ], 'one', false);
+
+                    if($textmultiLang) {
+                        $textmulti['id'] = $textmultiLang['id_textmulti'];
+
+                        if (!empty($textmulti['desc_textmulti'])) {
+                            $revisions->saveRevision($this->controller, $textmulti['id'], $lang, 'desc_textmulti', $textmulti['desc_textmulti']);
+                        }
+
+                        $this->upd(['type' => 'textmultiContent', 'data' => $textmulti]);
+                    } else {
+                        $textmulti['id_textmulti'] = $currentId;
+                        $this->add(['type' => 'textmultiContent', 'data' => $textmulti]);
+                    }
+                }
+
+                $this->message->json_post_response(true, $notify);
+            } else {
                     $this->modelLanguage->getLanguage();
                     if(isset($this->mod_edit)) {
                         $collection = $this->getItems('textmultiContent',$this->mod_edit,'all',false);

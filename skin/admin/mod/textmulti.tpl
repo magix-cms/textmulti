@@ -16,7 +16,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="desc_textmulti_{$id}">{#desc_textmulti#|ucfirst} :</label>
-                                            <textarea id="desc_textmulti_{$id}" name="content[{$id}][desc_textmulti]" class="form-control mceEditor">{call name=cleantextarea field=$textmulti.content[{$id}].desc_textmulti}</textarea>
+                                            <textarea id="desc_textmulti_{$id}" name="content[{$id}][desc_textmulti]"
+                                                      data-controller="{$smarty.get.controller}"
+                                                      data-itemid="{$smarty.get.mod_edit}"
+                                                      data-lang="{$id}"
+                                                      data-field="desc_textmulti"
+                                                      class="form-control mceEditor">{call name=cleantextarea field=$textmulti.content[{$id}].desc_textmulti}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
